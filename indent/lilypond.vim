@@ -27,6 +27,7 @@ function GetLilyPondIndent()
   "Find a non-blank line above the current line.
   let lnum = prevnonblank(v:lnum - 1)
   let prevline = getline(lnum)
+  let thisline = getline(v:lnum)
   "Check if a block was started: '{' or '<<' is the last non-blank character of the previous line.
   if prevline =~ '^[^%]*\({\|<<\)\s*$' || prevline =~ '^\s*%\s*\({{{\).*$'
     let ind = indent(lnum) + &sw
@@ -35,7 +36,7 @@ function GetLilyPondIndent()
   endif
 
   "Check if a block was ended: '}' or '>>' is the first non-blank character of the current line.
-  if prevline =~ '^\s*\(}\|>>\)'|| prevline =~ '^\s*%\s*\(}}}\)$'
+  if thisline =~ '^\s*\(}\|>>\)'|| thisline =~ '^\s*%\s*\(}}}\)$'
     let ind = ind - &sw
   endif
 
